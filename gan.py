@@ -1,19 +1,29 @@
-# load data form MNIST
+# this is for tensorflow version < 2.0
+
+"""
+This is a straightforward Python implementation of a generative adversarial network.
+The code is drawn directly from the O'Reilly interactive tutorial on GANs
+(https://www.oreilly.com/learning/generative-adversarial-networks-for-beginners).
+
+A version of this model with explanatory notes is also available on GitHub
+at https://github.com/jonbruner/generative-adversarial-networks.
+
+This script requires TensorFlow and its dependencies in order to run. Please see
+the readme for guidance on installing TensorFlow.
+
+This script won't print summary statistics in the terminal during training;
+track progress and see sample images in TensorBoard.
+"""
+
 import tensorflow as tf
 import numpy as np
 import datetime
-import matplotlib.pyplot as plt
 
+# Load MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_datasets("MNIST_data/")
+mnist = input_data.read_data_sets("MNIST_data/")
 
-sample_image = mnist.train.next_batch(1)[0]
-print(sample_image)
-
-sample_image = sample_image.reshape([28, 28])
-plt.imshow(sample_image, cmap='Greys')
-
-# Discriminator network
+# Define the discriminator network
 
 
 def discriminator(images, reuse_variables=None):
@@ -64,7 +74,7 @@ def discriminator(images, reuse_variables=None):
         # d4 contains unscaled values
         return d4
 
-# Generator network
+# Define the generator network
 
 
 def generator(z, batch_size, z_dim):
@@ -112,23 +122,8 @@ def generator(z, batch_size, z_dim):
     return g4
 
 
-# Generating a sample image
-z_dimensions = 0
-z_placeholder - tf.placeholder(tf.float32, [None, z_dimensions])
-generated_image_output = generator(z_placeholder, 1, z_dimensions)
-z_batch = np.random.normal(0, 1, [1, z_dimensions])
-
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    generated_image = sess.run(generated_image_output,
-                               feed_dict={z_placeholder: z_batch})
-    generated_image = generated_image.reshape([28, 28])
-    plt.imshow(generated_image, cmap='Greys')
-
-# train a gan
-tf.reset_default_graph()
+z_dimensions = 100
 batch_size = 50
-
 z_placeholder = tf.placeholder(
     tf.float32, [None, z_dimensions], name='z_placeholder')
 # z_placeholder is for feeding input noise to the generator
@@ -146,22 +141,21 @@ Dx = discriminator(x_placeholder)
 
 Dg = discriminator(Gz, reuse_variables=True)
 # Dg will hold discriminator prediction probabilities for generated images
+
+# Define losses
 d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
     logits=Dx, labels=tf.ones_like(Dx)))
 d_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
     logits=Dg, labels=tf.zeros_like(Dg)))
-
 g_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
     logits=Dg, labels=tf.ones_like(Dg)))
 
+# Define variable lists
 tvars = tf.trainable_variables()
-
 d_vars = [var for var in tvars if 'd_' in var.name]
 g_vars = [var for var in tvars if 'g_' in var.name]
 
-print([v.name for v in d_vars])
-print([v.name for v in g_vars])
-
+# Define the optimizers
 # Train the discriminator
 d_trainer_fake = tf.train.AdamOptimizer(
     0.0003).minimize(d_loss_fake, var_list=d_vars)
@@ -174,6 +168,9 @@ g_trainer = tf.train.AdamOptimizer(0.0001).minimize(g_loss, var_list=g_vars)
 # From this point forward, reuse variables
 tf.get_variable_scope().reuse_variables()
 
+sess = tf.Session()
+
+# Send summary statistics to TensorBoard
 tf.summary.scalar('Generator_loss', g_loss)
 tf.summary.scalar('Discriminator_loss_real', d_loss_real)
 tf.summary.scalar('Discriminator_loss_fake', d_loss_fake)
@@ -184,7 +181,6 @@ merged = tf.summary.merge_all()
 logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
 writer = tf.summary.FileWriter(logdir, sess.graph)
 
-sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 # Pre-train discriminator
@@ -194,9 +190,6 @@ for i in range(300):
         batch_size)[0].reshape([batch_size, 28, 28, 1])
     _, __, dLossReal, dLossFake = sess.run([d_trainer_real, d_trainer_fake, d_loss_real, d_loss_fake],
                                            {x_placeholder: real_image_batch, z_placeholder: z_batch})
-
-    if(i % 100 == 0):
-        print("dLossReal:", dLossReal, "dLossFake:", dLossFake)
 
 # Train generator and discriminator together
 for i in range(100000):
@@ -219,29 +212,6 @@ for i in range(100000):
             merged, {z_placeholder: z_batch, x_placeholder: real_image_batch})
         writer.add_summary(summary, i)
 
-    if i % 100 == 0:
-        # Every 100 iterations, show a generated image
-        print("Iteration:", i, "at", datetime.datetime.now())
-        z_batch = np.random.normal(0, 1, size=[1, z_dimensions])
-        generated_images = generator(z_placeholder, 1, z_dimensions)
-        images = sess.run(generated_images, {z_placeholder: z_batch})
-        plt.imshow(images[0].reshape([28, 28]), cmap='Greys')
-        plt.show()
-
-        # Show discriminator's estimate
-        im = images[0].reshape([1, 28, 28, 1])
-        result = discriminator(x_placeholder)
-        estimate = sess.run(result, {x_placeholder: im})
-        print("Estimate:", estimate)
-
-saver = tf.train.Saver()
-with tf.Session() as sess:
-    saver.restore(sess, 'pretrained-model/pretrained_gan.ckpt')
-    z_batch = np.random.normal(0, 1, size=[10, z_dimensions])
-    z_placeholder = tf.placeholder(
-        tf.float32, [None, z_dimensions], name='z_placeholder')
-    generated_images = generator(z_placeholder, 10, z_dimensions)
-    images = sess.run(generated_images, {z_placeholder: z_batch})
-    for i in range(10):
-        plt.imshow(images[i].reshape([28, 28]), cmap='Greys')
-        plt.show()
+# Optionally, uncomment the following lines to update the checkpoint files attached to the tutorial.
+# saver = tf.train.Saver()
+# saver.save(sess, 'pretrained-model/pretrained_gan.ckpt')
