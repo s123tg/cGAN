@@ -4,4 +4,4 @@
 
 #### Midterm Check
 
-![gan.py]("/ans/midterm_check/gan.png")
+![gan.py](/ans/midterm_check/gan.png)
