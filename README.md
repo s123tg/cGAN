@@ -13,3 +13,7 @@ now we are doing a simply GAN
 ### Goal
 
 cGAN
+
+## Report
+
+![midterm_check_report](/ans/midterm_check/GAN手寫數字生成_第12組.pdf)
