@@ -5,3 +5,11 @@
 #### Midterm Check
 
 ![gan.py](/ans/midterm_check/gan.png)
+
+#### Warning
+
+now we are doing a simply GAN
+
+### Goal
+
+cGAN
