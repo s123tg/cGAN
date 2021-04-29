@@ -1,19 +1,30 @@
-#### References
+# GAN手寫數字生成
 
-- [GAN（生成對抗網絡）的模型構建【tensorflow-2.1.0】](https://blog.csdn.net/gdhy9064/article/details/104106500)
+中央大學資工系程式語言作業
 
-#### Midterm Check
+## Purpose
 
-![gan.py](/ans/midterm_check/gan.png)
+[GAN手寫數字生成.pdf](/hw/GAN手寫數字生成.pdf)
 
-#### Warning
+#### Ways we are doing
 
 now we are doing a simply GAN
 
-### Goal
+#### Ways we are implementing
 
 cGAN
 
-## Report
+## Reports
 
-[midterm_check_report](/ans/midterm_check/GAN手寫數字生成_第12組.pdf)
+### Inition Check
+
+* [Inition Report](/ans/inition_check/)
+
+### Midterm Check
+
+* [Midterm Report](/ans/midterm_check/GAN手寫數字生成_第12組.pdf)
+* ![gan.py](/ans/midterm_check/gan.png)
+
+## References
+
+- [GAN（生成對抗網絡）的模型構建【tensorflow-2.1.0】](https://blog.csdn.net/gdhy9064/article/details/104106500)
