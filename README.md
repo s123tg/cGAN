@@ -6,11 +6,11 @@
 
 [GAN手寫數字生成.pdf](/hw/GAN手寫數字生成.pdf)
 
-#### Ways we are doing
+#### WAYS WE ARE DOING
 
 now we are doing a simply GAN
 
-#### Ways we are implementing
+#### WAYS WE ARE IMPLEMENTING
 
 cGAN
 
