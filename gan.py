@@ -10,8 +10,11 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import *
 from tensorflow.keras.optimizers import Adam
 from os import system
+
+# data
 (train_x, train_y), (test_x, test_y) = mnist.load_data()
 train_x = train_x.reshape([-1, 28 * 28]) / 255  # flatten后归一化
+
 # 生成器
 generator = Sequential([
     Dense(128, activation='relu', input_shape=[100]),
@@ -61,6 +64,9 @@ fit_generator.add_loss(g_loss)
 discriminator.trainable = False
 fit_generator.compile(optimizer=Adam(0.001))
 discriminator.trainable = True
+
+
+# train
 batch_size = 64
 for i in range(20000):
     # if i % 2000 == 0:
@@ -75,6 +81,9 @@ for i in range(20000):
     # 训练辨别器，多输入需传入一个包含多个tensor的列表，此处用K.constant代替
     fit_discriminator.fit([K.constant(x), K.constant(g_sample)])
     fit_generator.fit(g_sample)  # 训练生成器
+
+
+# image show
 fig, axes = plt.subplots(10, 10, figsize=(10, 10))
 for i in range(10):
     for j in range(10):
