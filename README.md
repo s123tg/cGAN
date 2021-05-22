@@ -14,6 +14,10 @@ now we are doing a simply GAN
 
 cGAN
 
+#### Requirements
+
+Python>=3.7
+
 ## Reports
 
 ### Inition Check

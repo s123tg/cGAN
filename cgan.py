@@ -134,7 +134,7 @@ for i in range(10000):
 fig, axes = plt.subplots(10, 10, figsize=(10, 10))
 for i in range(10):
     for j in range(10):
-        axes[i, j].imshow(generator.predict(
-            np.random.uniform(-1, 1, [1, 100]))[0].reshape([28, 28]), cmap='gray')
+        axes[i, j].imshow(generator.predict([K.constant(
+            np.random.uniform(-1, 1, [1, 100])), K.constant([i])])[0].reshape([28, 28]), cmap='gray')
         axes[i, j].axis(False)
 plt.show()
