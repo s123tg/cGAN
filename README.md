@@ -28,17 +28,16 @@ Python>=3.7
 ### Midterm Check
 
 - [Midterm Report](/ans/midterm/GAN手寫數字生成_第12組.pdf)
-- <img src="/ans/midterm/gan.png" width="300" height="300" title="gan-20000">
-- ![gan-20000](/ans/midterm/gan.png "gan-20000")
+- train simple GAN for 20000 times<br><img src="/ans/midterm/gan.png" width="300" height="300" title="gan-20000">
 
 ### Final Report
 
 ## References
 
 - [GAN（生成對抗網絡）的模型構建【tensorflow-2.1.0】](https://blog.csdn.net/gdhy9064/article/details/104106500)
-- ![cgan-10000](/ans/final/cgan-10000.png "cgan-10000")
-<!-- - ![cgan-50000](/ans/final/cgan-50000.png "cgan-50000") -->
-<!-- - ![cgan-100000](/ans/final/cgan-100000.png "cgan-100000") -->
+- train cGAN for 10000 times<br><img src="/ans/final/cgan-10000.png" width="300" height="300" title="cgan-10000">
+<!-- - train cGAN for 50000 times<br><img src="/ans/final/cgan-50000.png" width="300" height="300" title="cgan-50000">
+- train cGAN for 100000 times<br><img src="/ans/final/cgan-100000.png" width="300" height="300" title="cgan-100000"> -->
 
 ## Teammates
 
