@@ -23,7 +23,7 @@ Python>=3.7
 
 ### Inition Check
 
-- [Inition Report](/ans/inition/)
+- [Inition Report](/ans/inition/程式語言-期末報告分組_第12組.pdf)
 
 ### Midterm Check
 
