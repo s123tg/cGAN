@@ -1,15 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
-import tensorflow as tf
-import tensorflow.keras as keras
 from tensorflow.keras import Model
 from tensorflow.keras import Sequential
 import tensorflow.keras.backend as K
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import *
 from tensorflow.keras.optimizers import Adam
-from os import system
 
 # data
 (train_x, train_y), (test_x, test_y) = mnist.load_data()
