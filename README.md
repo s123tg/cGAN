@@ -28,7 +28,7 @@ Python>=3.7
 ### Midterm Check
 
 - [Midterm Report](/ans/midterm/GAN手寫數字生成_第12組.pdf)
-- <img src="/ans/midterm/gan.png" width="300" height="300" alt="gan-20000">
+- <img src="/ans/midterm/gan.png" width="300" height="300" title="gan-20000">
 - ![gan-20000](/ans/midterm/gan.png "gan-20000")
 
 ### Final Report
