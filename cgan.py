@@ -128,11 +128,11 @@ fit_generator.compile(optimizer=Adam(0.001))
 discriminator.trainable = True
 
 print("/////")
-print("Generator summary:")
-g_sequential.summary()
-print("/////")
 print("Discriminator summary:")
-discriminator.summary()
+fit_discriminator.summary()
+print("/////")
+print("Generator summary:")
+fit_generator.summary()
 print("/////")
 
 # train for 10000 times
@@ -155,6 +155,10 @@ for i in range(10000):
         [K.constant(g_sample), K.constant(g_label), K.constant(x), K.constant(x_label)]
     )
     fit_generator.fit([K.constant(g_sample), K.constant(g_label)])
+
+# save model
+fit_discriminator.save("./models/discriminator.h5")
+fit_generator.save("./models/generator.h5")
 
 # image show
 fig, axes = plt.subplots(10, 10, figsize=(10, 10))
