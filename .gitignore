@@ -1,4 +1,5 @@
 /.history
 /venv
-/.vscode
-/models
+.vscode/*
+models/*
+!models/*.png
