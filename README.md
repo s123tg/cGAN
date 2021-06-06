@@ -23,19 +23,19 @@ Python>=3.7
 
 ### Inition Check
 
-- [Inition Report](/report/inition/程式語言-期末報告分組_第12組.pdf)
+- [Inition Report](/reports/inition/程式語言-期末報告分組_第12組.pdf)
 
 ### Midterm Check
 
-- [Midterm Report](/report/midterm/GAN手寫數字生成_第12組.pdf)
-- train simple GAN for 20000 times<br><img src="/report/midterm/gan.png" width="300" height="300" title="gan-20000">
+- [Midterm Report](/reports/midterm/GAN手寫數字生成_第12組.pdf)
+- train simple GAN for 20000 times<br><img src="/reports/midterm/gan.png" width="300" height="300" title="gan-20000">
 
 ### Final Report
 
-- train cGAN for 10000 times<br><img src="/report/final/cgan-10000.png" width="300" height="300" title="cgan-10000">
-- train cGAN for 50000 times<br><img src="/report/final/cgan-50000.png" width="300" height="300" title="cgan-50000">
+- train cGAN for 10000 times<br><img src="/reports/final/cgan-10000.png" width="300" height="300" title="cgan-10000">
+- train cGAN for 50000 times<br><img src="/reports/final/cgan-50000.png" width="300" height="300" title="cgan-50000">
 
-<!-- - train cGAN for 100000 times<br><img src="/report/final/cgan-100000.png" width="300" height="300" title="cgan-100000"> -->
+<!-- - train cGAN for 100000 times<br><img src="/reports/final/cgan-100000.png" width="300" height="300" title="cgan-100000"> -->
 
 ## References
 
