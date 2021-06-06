@@ -1,10 +1,10 @@
-# GAN手寫數字生成
+# GAN 手寫數字生成
 
 中央大學資工系程式語言作業
 
 ## Purpose
 
-[GAN手寫數字生成.pdf](/hw/GAN手寫數字生成.pdf)
+[GAN 手寫數字生成.pdf](/hw/GAN手寫數字生成.pdf)
 
 ### WAYS WE ARE DOING FIRST
 
@@ -23,19 +23,19 @@ Python>=3.7
 
 ### Inition Check
 
-- [Inition Report](/ans/inition/程式語言-期末報告分組_第12組.pdf)
+- [Inition Report](/report/inition/程式語言-期末報告分組_第12組.pdf)
 
 ### Midterm Check
 
-- [Midterm Report](/ans/midterm/GAN手寫數字生成_第12組.pdf)
-- train simple GAN for 20000 times<br><img src="/ans/midterm/gan.png" width="300" height="300" title="gan-20000">
+- [Midterm Report](/report/midterm/GAN手寫數字生成_第12組.pdf)
+- train simple GAN for 20000 times<br><img src="/report/midterm/gan.png" width="300" height="300" title="gan-20000">
 
 ### Final Report
 
-- train cGAN for 10000 times<br><img src="/ans/final/cgan-10000.png" width="300" height="300" title="cgan-10000">
-- train cGAN for 50000 times<br><img src="/ans/final/cgan-50000.png" width="300" height="300" title="cgan-50000">
+- train cGAN for 10000 times<br><img src="/report/final/cgan-10000.png" width="300" height="300" title="cgan-10000">
+- train cGAN for 50000 times<br><img src="/report/final/cgan-50000.png" width="300" height="300" title="cgan-50000">
 
-<!-- - train cGAN for 100000 times<br><img src="/ans/final/cgan-100000.png" width="300" height="300" title="cgan-100000"> -->
+<!-- - train cGAN for 100000 times<br><img src="/report/final/cgan-100000.png" width="300" height="300" title="cgan-100000"> -->
 
 ## References
 
