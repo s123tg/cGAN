@@ -25,6 +25,11 @@ def load_data(path):
 
 (train_x, train_y), (test_x, test_y) = load_data("./dataset/mnist.npz")
 # (train_x, train_y), (test_x, test_y) = mnist.load_data()
+print("----------------------------")
+print("Train shape:", train_x.shape)
+print("Test shape:", test_x.shape)
+print("----------------------------")
+
 train_x = train_x.reshape([-1, 28, 28, 1]) / 255  # flatten后归一化
 
 
@@ -122,6 +127,13 @@ for layer in discriminator.layers:
 fit_generator.compile(optimizer=Adam(0.001))
 discriminator.trainable = True
 
+print("/////")
+print("Generator summary:")
+g_sequential.summary()
+print("/////")
+print("Discriminator summary:")
+discriminator.summary()
+print("/////")
 
 # train for 10000 times
 batch_size = 64
