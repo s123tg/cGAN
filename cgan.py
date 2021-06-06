@@ -129,15 +129,15 @@ discriminator.trainable = True
 
 print("/////")
 print("Discriminator summary:")
-fit_discriminator.summary()
+discriminator.summary()
 print("/////")
 print("Generator summary:")
-fit_generator.summary()
+generator.summary()
 print("/////")
 
 # train for 10000 times
 batch_size = 64
-for i in range(10000):
+for i in range(1):
     # if i % 10 == 0:
     #     clear_output()
     #     plt.imshow(generator.predict([K.constant(
@@ -157,8 +157,10 @@ for i in range(10000):
     fit_generator.fit([K.constant(g_sample), K.constant(g_label)])
 
 # save model
-fit_discriminator.save("./models/discriminator.h5")
-fit_generator.save("./models/generator.h5")
+discriminator.save("./models/discriminator")
+generator.save("./models/generator")
+fit_discriminator.save("./models/fit_discriminator")
+fit_generator.save("./models/fit_generator")
 
 # image show
 fig, axes = plt.subplots(10, 10, figsize=(10, 10))
