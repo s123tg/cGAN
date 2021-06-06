@@ -10,9 +10,9 @@ from tensorflow.keras.optimizers import Adam
 
 # data
 (train_x, train_y), (test_x, test_y) = mnist.load_data()
-train_x = train_x.reshape([-1, 28 * 28]) / 255  # flatten后归一化
+train_x = train_x.reshape([-1, 28 * 28]) / 255  # flatten 後歸一化
 
-# 生成器
+# 生成器 generator
 generator = Sequential(
     [
         Dense(128, activation="relu", input_shape=[100]),
@@ -20,7 +20,7 @@ generator = Sequential(
     ]
 )
 
-# 判别器
+# 判別器 discriminator
 discriminator = Sequential(
     [
         Dense(128, activation="relu", input_shape=[28 * 28]),
@@ -28,37 +28,37 @@ discriminator = Sequential(
     ]
 )
 
-g_sample_input = Input([100])  # 生成器输入
-x_input = Input([28 * 28])  # 真实数据输入
+g_sample_input = Input([100])  # 生成器輸入
+x_input = Input([28 * 28])  # 真實樣本輸入
 
-# 裁剪概率到区间[1e-6, 1]内，并求其log，避免log后为inf，K.stop_gradient表示训练时不对其求梯度
-#   这里也可直接写成 log_clip = Lambda(lambda x: K.log(x + 1e-3))
+# 裁減機率到區間 [1e-3, 1] 內，並求其 log ，避免 log 後為 inf，K.stop_gradient 表示訓練時不對其求梯度
+#   這裡也可直接寫成 log_clip = Lambda(lambda x: K.log(x + 1e-3))
 log_clip = Lambda(
     lambda x: K.log(K.clip(K.stop_gradient(x), 1e-6, 1) - K.stop_gradient(x) + x)
 )
 
-g = discriminator(generator(g_sample_input))  # 假数据
+g = discriminator(generator(g_sample_input))  # 假數據
 
-# 判别器loss
+# 判別器 loss
 d_loss = -log_clip(discriminator(x_input)) - log_clip(1.0 - g)
 
 fit_discriminator = Model(
     inputs=[x_input, g_sample_input], outputs=d_loss
-)  # 训练discriminator所用模型
-fit_discriminator.add_loss(d_loss)  # 添加自定义loss
+)  # 訓練 discriminator 所用模型
+fit_discriminator.add_loss(d_loss)  # 添加自定義loss
 
-# 在调用compile之前置generator.trainable为False，调用compile后的模型训练时不更新generator的参数
+# 在調用 compile 之前置 generator.trainable 為 False，調用 compile 後的模型訓練時不更新 generator 的參數
 generator.trainable = False
 fit_discriminator.compile(optimizer=Adam(0.001))
 generator.trainable = True
 
-# 生成器loss
+# 生成器 loss
 g_loss = -log_clip(g)
 
-fit_generator = Model(inputs=g_sample_input, outputs=g_loss)  # 训练generator所用模型
+fit_generator = Model(inputs=g_sample_input, outputs=g_loss)  # 訓練 generator 所用模型
 fit_generator.add_loss(g_loss)
 
-# 生成器训练时不更新discriminator的参数
+# 生成器訓練時不更新discriminator的參數
 discriminator.trainable = False
 fit_generator.compile(optimizer=Adam(0.001))
 discriminator.trainable = True
@@ -72,13 +72,13 @@ for i in range(20000):
     # plt.imshow(generator.predict(np.random.uniform(-1, 1, [1, 100]))[0].reshape([28, 28]), cmap='gray')
     # plt.show()
     # print(i)
-    # 随机选取batch_size个真样本
+    # 隨機選取 batch_size 個真樣本
     x = train_x[random.sample(range(len(train_x)), batch_size)]
-    # 生成batch_size个随机数据输入
+    # 生成 batch_size 個隨機數據輸入
     g_sample = np.random.uniform(-1, 1, [batch_size, 100])
-    # 训练辨别器，多输入需传入一个包含多个tensor的列表，此处用K.constant代替
+    # 訓練判別器，多輸入需傳入一個包含多個 tensor 的列表，此處用 K.constant 代替
     fit_discriminator.fit([K.constant(x), K.constant(g_sample)])
-    fit_generator.fit(g_sample)  # 训练生成器
+    fit_generator.fit(g_sample)  # 訓練生成器
 
 
 # image show

@@ -30,7 +30,7 @@ print("Train shape:", train_x.shape)
 print("Test shape:", test_x.shape)
 print("----------------------------")
 
-train_x = train_x.reshape([-1, 28, 28, 1]) / 255  # flatten后归一化
+train_x = train_x.reshape([-1, 28, 28, 1]) / 255  # flatten 後歸一化
 
 
 # 生成器 generator
@@ -49,7 +49,7 @@ g_sequential = Sequential(
     ]
 )
 
-# 判别器 discriminator
+# 判別器 discriminator
 discriminator = Sequential(
     [
         Conv2D(64, [3, 3], padding="same", input_shape=[28, 28, 1]),
@@ -68,61 +68,61 @@ discriminator = Sequential(
     ]
 )
 
-g_sample_input = Input([100])  # 生成器输入
-g_label_input = Input([], dtype="int32")  # 指定标签输入
-x_input = Input([28, 28, 1])  # 真实样本输入
-x_label_input = Input([], dtype="int32")  # 真实样本标签输入
+g_sample_input = Input([100])  # 生成器輸入
+g_label_input = Input([], dtype="int32")  # 指定標籤輸入
+x_input = Input([28, 28, 1])  # 真實樣本輸入
+x_label_input = Input([], dtype="int32")  # 真實樣本標籤輸入
 
 condition_g_sample_input = K.concatenate(
     [g_sample_input, K.one_hot(g_label_input, 10)]
-)  # 合并随机数据输入与指定标签独热码
+)  # 合併隨機數據輸入與指定標籤獨熱碼
 
-g_output = g_sequential(condition_g_sample_input)  # 生成器输出
+g_output = g_sequential(condition_g_sample_input)  # 生成器輸出
 generator = Model(inputs=[g_sample_input, g_label_input], outputs=g_output)  # 生成器模型
 
-# 裁剪概率到区间[1e-3, 1]内，并求其log，避免log后为inf，K.stop_gradient表示训练时不对其求梯度
-#   这里也可直接写成 log_clip = Lambda(lambda x: K.log(x + 1e-3))
+# 裁減機率到區間 [1e-3, 1] 內，並求其 log ，避免 log 後為 inf，K.stop_gradient 表示訓練時不對其求梯度
+#   這裡也可直接寫成 log_clip = Lambda(lambda x: K.log(x + 1e-3))
 log_clip = Lambda(
     lambda x: K.log(K.clip(K.stop_gradient(x), 1e-3, 1) - K.stop_gradient(x) + x)
 )
 
-g_prob = discriminator(generator([g_sample_input, g_label_input]))  # 判别器识别假样本的输出
+g_prob = discriminator(generator([g_sample_input, g_label_input]))  # 判別器識別假樣本的輸出
 g_index = K.stack(
     [K.arange(0, K.shape(g_prob)[0]), g_label_input], axis=1
-)  # 用于索引g_prob指定标签概率值
+)  # 用於索引 g_prob 指定標籤機率值
 
-d_prob = discriminator(x_input)  # 判别器识别真实样本的输出
+d_prob = discriminator(x_input)  # 判別器識別真實樣本的輸出
 x_index = K.stack(
     [K.arange(0, K.shape(d_prob)[0]), x_label_input], axis=1
-)  # 用于索引d_prob正确标签概率值
+)  # 用於索引 d_prob 正確標籤機率值
 
 
-d_loss = -log_clip(tf.gather_nd(d_prob, x_index)) - log_clip(  # log(真实样本正确标签概率值)
+d_loss = -log_clip(tf.gather_nd(d_prob, x_index)) - log_clip(  # log(真實樣本正確標籤的機率值)
     1.0 - tf.gather_nd(g_prob, g_index)
-)  # log(1-假样本指定标签的概率值)
+)  # log(1-假樣本指定標籤的機率值)
 
 fit_discriminator = Model(
     inputs=[g_sample_input, g_label_input, x_input, x_label_input], outputs=d_loss
 )
-fit_discriminator.add_loss(d_loss)  # 添加自定义loss
+fit_discriminator.add_loss(d_loss)  # 添加自定義loss
 generator.trainable = False
 for layer in generator.layers:
-    if isinstance(layer, BatchNormalization):  # 设置BatchNormalization为训练模式
+    if isinstance(layer, BatchNormalization):  # 設置 BatchNormalization 為訓練模式
         layer.trainable = True
 fit_discriminator.compile(optimizer=Adam(0.001))
 generator.trainable = True
 
 
-g_loss = -log_clip(tf.gather_nd(g_prob, g_index))  # log(假样本指定标签的概率值)
+g_loss = -log_clip(tf.gather_nd(g_prob, g_index))  # log(假樣本指定標籤的機率值)
 
 
 fit_generator = Model(inputs=[g_sample_input, g_label_input], outputs=g_loss)
-fit_generator.add_loss(g_loss)  # 添加自定义loss
+fit_generator.add_loss(g_loss)  # 添加自定義loss
 
-# 生成器训练时不更新discriminator的参数
+# 生成器訓練時不更新discriminator的參數
 discriminator.trainable = False
 for layer in discriminator.layers:
-    if isinstance(layer, BatchNormalization):  # 设置BatchNormalization为训练模式
+    if isinstance(layer, BatchNormalization):  # 設置 BatchNormalization 為訓練模式
         layer.trainable = True
 fit_generator.compile(optimizer=Adam(0.001))
 discriminator.trainable = True
@@ -138,13 +138,6 @@ print("/////")
 # train for 10000 times
 batch_size = 64
 for i in range(1):
-    # if i % 10 == 0:
-    #     clear_output()
-    #     plt.imshow(generator.predict([K.constant(
-    #         np.random.uniform(-1, 1, [1, 100])), K.constant([i % 10])])[0].reshape([28, 28]), cmap='gray')
-    #     plt.title(str(i % 10))
-    #     plt.show()
-    # print(i)
     index = random.sample(range(len(train_x)), batch_size)
     x_label = train_y[index]
     x = train_x[index]
