@@ -1,3 +1,4 @@
-.history/*
-/venv/*
-.vscode/*
+/.history
+/venv
+/.vscode
+/models
