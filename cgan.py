@@ -15,7 +15,16 @@ from tensorflow.keras.optimizers import Adam
 
 
 # load data
-(train_x, train_y), (test_x, test_y) = mnist.load_data()
+def load_data(path):
+    with np.load(path, allow_pickle=True) as f:
+        x_train, y_train = f["x_train"], f["y_train"]
+        x_test, y_test = f["x_test"], f["y_test"]
+
+    return (x_train, y_train), (x_test, y_test)
+
+
+(train_x, train_y), (test_x, test_y) = load_data("./dataset/mnist.npz")
+# (train_x, train_y), (test_x, test_y) = mnist.load_data()
 train_x = train_x.reshape([-1, 28, 28, 1]) / 255  # flatten后归一化
 
 
