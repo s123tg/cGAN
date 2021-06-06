@@ -155,6 +155,11 @@ generator.save("./models/generator")
 fit_discriminator.save("./models/fit_discriminator")
 fit_generator.save("./models/fit_generator")
 
+discriminator.save("./models/discriminator.h5")
+generator.save("./models/generator.h5")
+fit_discriminator.save("./models/fit_discriminator.h5")
+fit_generator.save("./models/fit_generator.h5")
+
 # image show
 fig, axes = plt.subplots(10, 10, figsize=(10, 10))
 for i in range(10):
