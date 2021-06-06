@@ -4,7 +4,7 @@
 
 ## Purpose
 
-[GAN 手寫數字生成.pdf](/hw/GAN手寫數字生成.pdf)
+[GAN 手寫數字生成.pdf](/documents/GAN手寫數字生成.pdf)
 
 ### WAYS WE ARE DOING FIRST
 
