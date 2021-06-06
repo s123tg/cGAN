@@ -16,7 +16,7 @@ cGAN
 
 ### Requirements
 
-Python>=3.7
+Python>=3.7<br>
 [requirements.txt](/requirements.txt)
 
 ## Reports
