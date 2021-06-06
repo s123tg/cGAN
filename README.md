@@ -21,9 +21,9 @@ cGAN
 
 ## Reports
 
-### Inition Check
+### Initial Check
 
-- [Inition Report](/reports/inition/程式語言-期末報告分組_第12組.pdf)
+- [Initial Report](/reports/initial/程式語言-期末報告分組_第12組.pdf)
 
 ### Midterm Check
 
